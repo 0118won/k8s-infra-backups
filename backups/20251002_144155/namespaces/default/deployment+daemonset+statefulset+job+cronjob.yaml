@@ -1,0 +1,2005 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "56"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"blockchain-node"},"name":"blockchain-node","namespace":"default"},"spec":{"replicas":1,"revisionHistoryLimit":3,"selector":{"matchLabels":{"app":"blockchain-node"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"blockchain-node"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["blockchain"]}]},"weight":100},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["mongo"]}]},"weight":80}],"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["blockchain","mongo"]}]}]}}},"containers":[{"image":"jwon415/vote-server:blockchain","imagePullPolicy":"Always","name":"blockchain","ports":[{"containerPort":9000},{"containerPort":9001},{"containerPort":9010},{"containerPort":9100}],"volumeMounts":[{"mountPath":"/root/.env","name":"env-volume","subPath":".env"},{"mountPath":"/root/blocks","name":"blockchain-data"}]}],"terminationGracePeriodSeconds":10,"tolerations":[{"effect":"NoExecute","key":"node.kubernetes.io/not-ready","operator":"Exists","tolerationSeconds":60},{"effect":"NoExecute","key":"node.kubernetes.io/unreachable","operator":"Exists","tolerationSeconds":60}],"volumes":[{"configMap":{"items":[{"key":".env","path":".env"}],"name":"blockchain-config"},"name":"env-volume"},{"name":"blockchain-data","nfs":{"path":"/srv/nfs/data/blocks","server":"192.168.222.13"}}]}}}}
+    creationTimestamp: "2025-07-09T14:40:52Z"
+    generation: 58
+    labels:
+      app: blockchain-node
+    name: blockchain-node
+    namespace: default
+    resourceVersion: "5919763"
+    uid: 910102dd-6a0a-407e-9663-c2eebae22fd5
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app: blockchain-node
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-09-30T12:19:35Z"
+        creationTimestamp: null
+        labels:
+          app: blockchain-node
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - blockchain
+              weight: 100
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - mongo
+              weight: 80
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - blockchain
+                  - mongo
+        containers:
+        - image: jwon415/vote-server@sha256:f01c1540e1708d5e0b8769a27d3239b0d494c5a2374d77a02b0eb82b32ee9f24
+          imagePullPolicy: Always
+          name: blockchain
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          - containerPort: 9001
+            protocol: TCP
+          - containerPort: 9010
+            protocol: TCP
+          - containerPort: 9100
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /root/.env
+            name: env-volume
+            subPath: .env
+          - mountPath: /root/blocks
+            name: blockchain-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 10
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 60
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 60
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: .env
+              path: .env
+            name: blockchain-config
+          name: env-volume
+        - name: blockchain-data
+          nfs:
+            path: /srv/nfs/data/blocks
+            server: 192.168.222.13
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-09-30T12:17:44Z"
+      lastUpdateTime: "2025-09-30T12:50:52Z"
+      message: ReplicaSet "blockchain-node-6c674bf85f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-10-01T00:54:19Z"
+      lastUpdateTime: "2025-10-01T00:54:19Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 58
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "25"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"caching-server"},"name":"caching-server","namespace":"default"},"spec":{"replicas":1,"revisionHistoryLimit":3,"selector":{"matchLabels":{"app":"caching-server"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"caching-server"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["mongo"]}]},"weight":100},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["front"]}]},"weight":80},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["spring"]}]},"weight":70},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["flutter"]}]},"weight":60},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["blockchain"]}]},"weight":50}],"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["mongo","front","spring","flutter","blockchain"]}]}]}}},"containers":[{"command":["npm","run","start"],"image":"jwon415/vote-server:cache","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"initialDelaySeconds":30,"periodSeconds":10,"tcpSocket":{"port":50051},"timeoutSeconds":2},"name":"caching","ports":[{"containerPort":50051}],"readinessProbe":{"failureThreshold":6,"periodSeconds":5,"tcpSocket":{"port":50051},"timeoutSeconds":2},"resources":{"limits":{"cpu":"400m","memory":"512Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"startupProbe":{"failureThreshold":24,"initialDelaySeconds":10,"periodSeconds":5,"tcpSocket":{"port":50051}},"volumeMounts":[{"mountPath":"/app/.env","name":"env-volume","subPath":".env"}]}],"terminationGracePeriodSeconds":10,"tolerations":[{"effect":"NoExecute","key":"node.kubernetes.io/not-ready","operator":"Exists","tolerationSeconds":60},{"effect":"NoExecute","key":"node.kubernetes.io/unreachable","operator":"Exists","tolerationSeconds":60}],"volumes":[{"configMap":{"items":[{"key":".env","path":".env"}],"name":"caching-config"},"name":"env-volume"}]}}}}
+    creationTimestamp: "2025-07-10T03:58:16Z"
+    generation: 29
+    labels:
+      app: caching-server
+    name: caching-server
+    namespace: default
+    resourceVersion: "5921402"
+    uid: dcebd3e4-687b-4312-a650-99243d206300
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app: caching-server
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-09-30T12:01:46Z"
+        creationTimestamp: null
+        labels:
+          app: caching-server
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - mongo
+              weight: 100
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - front
+              weight: 80
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - spring
+              weight: 70
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - flutter
+              weight: 60
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - blockchain
+              weight: 50
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - mongo
+                  - front
+                  - spring
+                  - flutter
+                  - blockchain
+        containers:
+        - command:
+          - npm
+          - run
+          - start
+          image: jwon415/vote-server@sha256:8671ba8225f9d39a41b3eba90405e57e8e4c630b6e871d5d8aef12bdb13dd01b
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 50051
+            timeoutSeconds: 2
+          name: caching
+          ports:
+          - containerPort: 50051
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 6
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 50051
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: 400m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 24
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 50051
+            timeoutSeconds: 1
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/.env
+            name: env-volume
+            subPath: .env
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 10
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 60
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 60
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: .env
+              path: .env
+            name: caching-config
+          name: env-volume
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-07-11T14:45:41Z"
+      lastUpdateTime: "2025-09-30T13:03:59Z"
+      message: ReplicaSet "caching-server-5c9bbb5895" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-10-01T01:16:57Z"
+      lastUpdateTime: "2025-10-01T01:16:57Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 29
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "61"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"flutter-app"},"name":"flutter-deployment","namespace":"default"},"spec":{"replicas":2,"revisionHistoryLimit":3,"selector":{"matchLabels":{"app":"flutter-app"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"flutter-app"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["flutter"]}]},"weight":100},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["front"]}]},"weight":80},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["spring"]}]},"weight":60}],"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["flutter","front","spring"]}]}]}},"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app":"flutter-app"}},"topologyKey":"kubernetes.io/hostname"},"weight":100}]}},"containers":[{"image":"jwon415/vote-server:flutter","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/","port":80},"initialDelaySeconds":15,"periodSeconds":10,"timeoutSeconds":2},"name":"flutter-container","ports":[{"containerPort":80}],"readinessProbe":{"failureThreshold":5,"httpGet":{"path":"/","port":80},"initialDelaySeconds":3,"periodSeconds":5,"timeoutSeconds":2},"resources":{"limits":{"cpu":"200m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}},"volumeMounts":[{"mountPath":"/etc/nginx/conf.d/default.conf","name":"nginx-conf-volume","subPath":"default.conf"}]}],"terminationGracePeriodSeconds":10,"tolerations":[{"effect":"NoExecute","key":"node.kubernetes.io/not-ready","operator":"Exists","tolerationSeconds":60},{"effect":"NoExecute","key":"node.kubernetes.io/unreachable","operator":"Exists","tolerationSeconds":60}],"topologySpreadConstraints":[{"labelSelector":{"matchLabels":{"app":"flutter-app"}},"maxSkew":1,"topologyKey":"kubernetes.io/hostname","whenUnsatisfiable":"ScheduleAnyway"}],"volumes":[{"configMap":{"name":"flutter-nginx-conf"},"name":"nginx-conf-volume"}]}}}}
+    creationTimestamp: "2025-09-22T16:03:51Z"
+    generation: 61
+    labels:
+      app: flutter-app
+    name: flutter-deployment
+    namespace: default
+    resourceVersion: "6070771"
+    uid: f7d4140a-0fbc-4f22-b9ee-b23255452b12
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app: flutter-app
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-09-30T12:05:14Z"
+        creationTimestamp: null
+        labels:
+          app: flutter-app
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - flutter
+              weight: 100
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - front
+              weight: 80
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - spring
+              weight: 60
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - flutter
+                  - front
+                  - spring
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: flutter-app
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - image: jwon415/vote-server@sha256:0e4ae626e931f0fa814e85c35239f3c12776753b53225c9458c6906e329195ec
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: flutter-container
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/nginx/conf.d/default.conf
+            name: nginx-conf-volume
+            subPath: default.conf
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 10
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 60
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 60
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              app: flutter-app
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: flutter-nginx-conf
+          name: nginx-conf-volume
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2025-09-25T07:56:02Z"
+      lastUpdateTime: "2025-10-01T05:19:49Z"
+      message: ReplicaSet "flutter-deployment-7889b8d9b8" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-10-02T14:31:20Z"
+      lastUpdateTime: "2025-10-02T14:31:20Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 61
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: grafana
+      app.kubernetes.io/version: 12.1.1
+      helm.sh/chart: grafana-9.4.5
+    name: my-prometheus-grafana
+    namespace: default
+    resourceVersion: "5276732"
+    uid: 5cbb14b8-7143-404e-8dd4-6d242cc6bf5c
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: my-prometheus
+        app.kubernetes.io/name: grafana
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/config: 0e9cbd0ea8e24e32f7dfca5bab17a2ba05652642f0a09a4882833ae88e4cc4a3
+          checksum/sc-dashboard-provider-config: e70bf6a851099d385178a76de9757bb0bef8299da6d8443602590e44f05fdf24
+          checksum/secret: 032056e9c62bbe9d1daa41ee49cd3d9524c076f51ca4c65adadf4ef08ef28712
+          kubectl.kubernetes.io/default-container: grafana
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/instance: my-prometheus
+          app.kubernetes.io/name: grafana
+          app.kubernetes.io/version: 12.1.1
+          helm.sh/chart: grafana-9.4.5
+      spec:
+        automountServiceAccountToken: true
+        containers:
+        - env:
+          - name: METHOD
+            value: WATCH
+          - name: LABEL
+            value: grafana_dashboard
+          - name: LABEL_VALUE
+            value: "1"
+          - name: FOLDER
+            value: /tmp/dashboards
+          - name: RESOURCE
+            value: both
+          - name: NAMESPACE
+            value: ALL
+          - name: REQ_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: admin-user
+                name: my-prometheus-grafana
+          - name: REQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: admin-password
+                name: my-prometheus-grafana
+          - name: REQ_URL
+            value: http://localhost:3000/api/admin/provisioning/dashboards/reload
+          - name: REQ_METHOD
+            value: POST
+          image: quay.io/kiwigrid/k8s-sidecar:1.30.10
+          imagePullPolicy: IfNotPresent
+          name: grafana-sc-dashboard
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/dashboards
+            name: sc-dashboard-volume
+        - env:
+          - name: METHOD
+            value: WATCH
+          - name: LABEL
+            value: grafana_datasource
+          - name: LABEL_VALUE
+            value: "1"
+          - name: FOLDER
+            value: /etc/grafana/provisioning/datasources
+          - name: RESOURCE
+            value: both
+          - name: REQ_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: admin-user
+                name: my-prometheus-grafana
+          - name: REQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: admin-password
+                name: my-prometheus-grafana
+          - name: REQ_URL
+            value: http://localhost:3000/api/admin/provisioning/datasources/reload
+          - name: REQ_METHOD
+            value: POST
+          image: quay.io/kiwigrid/k8s-sidecar:1.30.10
+          imagePullPolicy: IfNotPresent
+          name: grafana-sc-datasources
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/grafana/provisioning/datasources
+            name: sc-datasources-volume
+        - env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          - name: GF_SECURITY_ADMIN_USER
+            valueFrom:
+              secretKeyRef:
+                key: admin-user
+                name: my-prometheus-grafana
+          - name: GF_SECURITY_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: admin-password
+                name: my-prometheus-grafana
+          - name: GF_PATHS_DATA
+            value: /var/lib/grafana/
+          - name: GF_PATHS_LOGS
+            value: /var/log/grafana
+          - name: GF_PATHS_PLUGINS
+            value: /var/lib/grafana/plugins
+          - name: GF_PATHS_PROVISIONING
+            value: /etc/grafana/provisioning
+          image: docker.io/grafana/grafana:12.1.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 30
+          name: grafana
+          ports:
+          - containerPort: 3000
+            name: grafana
+            protocol: TCP
+          - containerPort: 9094
+            name: gossip-tcp
+            protocol: TCP
+          - containerPort: 9094
+            name: gossip-udp
+            protocol: UDP
+          - containerPort: 6060
+            name: profiling
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/grafana/grafana.ini
+            name: config
+            subPath: grafana.ini
+          - mountPath: /var/lib/grafana
+            name: storage
+          - mountPath: /tmp/dashboards
+            name: sc-dashboard-volume
+          - mountPath: /etc/grafana/provisioning/dashboards/sc-dashboardproviders.yaml
+            name: sc-dashboard-provider
+            subPath: provider.yaml
+          - mountPath: /etc/grafana/provisioning/datasources
+            name: sc-datasources-volume
+        dnsPolicy: ClusterFirst
+        enableServiceLinks: true
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 472
+          runAsGroup: 472
+          runAsNonRoot: true
+          runAsUser: 472
+        serviceAccount: my-prometheus-grafana
+        serviceAccountName: my-prometheus-grafana
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: my-prometheus-grafana
+          name: config
+        - emptyDir: {}
+          name: storage
+        - emptyDir: {}
+          name: sc-dashboard-volume
+        - configMap:
+            defaultMode: 420
+            name: my-prometheus-grafana-config-dashboards
+          name: sc-dashboard-provider
+        - emptyDir: {}
+          name: sc-datasources-volume
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-09-11T04:03:24Z"
+      lastUpdateTime: "2025-09-12T12:30:53Z"
+      message: ReplicaSet "my-prometheus-grafana-76cc9f6b66" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-09-24T00:09:21Z"
+      lastUpdateTime: "2025-09-24T00:09:21Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    generation: 2
+    labels:
+      app: kube-prometheus-stack-operator
+      app.kubernetes.io/component: prometheus-operator
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
+      app.kubernetes.io/part-of: kube-prometheus-stack
+      app.kubernetes.io/version: 77.6.1
+      chart: kube-prometheus-stack-77.6.1
+      heritage: Helm
+      release: my-prometheus
+    name: my-prometheus-kube-prometh-operator
+    namespace: default
+    resourceVersion: "5276554"
+    uid: 6531cc90-d827-46df-b10f-54cc559091fc
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: kube-prometheus-stack-operator
+        release: my-prometheus
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: kube-prometheus-stack-operator
+          app.kubernetes.io/component: prometheus-operator
+          app.kubernetes.io/instance: my-prometheus
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
+          app.kubernetes.io/part-of: kube-prometheus-stack
+          app.kubernetes.io/version: 77.6.1
+          chart: kube-prometheus-stack-77.6.1
+          heritage: Helm
+          release: my-prometheus
+      spec:
+        automountServiceAccountToken: true
+        containers:
+        - args:
+          - --kubelet-service=kube-system/my-prometheus-kube-prometh-kubelet
+          - --kubelet-endpoints=true
+          - --kubelet-endpointslice=false
+          - --localhost=127.0.0.1
+          - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.85.0
+          - --config-reloader-cpu-request=0
+          - --config-reloader-cpu-limit=0
+          - --config-reloader-memory-request=0
+          - --config-reloader-memory-limit=0
+          - --thanos-default-base-image=quay.io/thanos/thanos:v0.39.2
+          - --secret-field-selector=type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1
+          - --web.enable-tls=true
+          - --web.cert-file=/cert/cert
+          - --web.key-file=/cert/key
+          - --web.listen-address=:10250
+          - --web.tls-min-version=VersionTLS13
+          env:
+          - name: GOGC
+            value: "30"
+          image: quay.io/prometheus-operator/prometheus-operator:v0.85.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: https
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: kube-prometheus-stack
+          ports:
+          - containerPort: 10250
+            name: https
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: https
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /cert
+            name: tls-secret
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 65534
+          runAsGroup: 65534
+          runAsNonRoot: true
+          runAsUser: 65534
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: my-prometheus-kube-prometh-operator
+        serviceAccountName: my-prometheus-kube-prometh-operator
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: tls-secret
+          secret:
+            defaultMode: 420
+            secretName: my-prometheus-kube-prometh-admission
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-09-11T04:03:24Z"
+      lastUpdateTime: "2025-09-12T12:30:07Z"
+      message: ReplicaSet "my-prometheus-kube-prometh-operator-688ddf7cff" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-09-24T00:09:17Z"
+      lastUpdateTime: "2025-09-24T00:09:17Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/component: metrics
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kube-state-metrics
+      app.kubernetes.io/part-of: kube-state-metrics
+      app.kubernetes.io/version: 2.17.0
+      helm.sh/chart: kube-state-metrics-6.3.0
+      release: my-prometheus
+    name: my-prometheus-kube-state-metrics
+    namespace: default
+    resourceVersion: "6070473"
+    uid: 3261b6d5-10c0-40a7-a74e-9b6c311c8002
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: my-prometheus
+        app.kubernetes.io/name: kube-state-metrics
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: metrics
+          app.kubernetes.io/instance: my-prometheus
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: kube-state-metrics
+          app.kubernetes.io/part-of: kube-state-metrics
+          app.kubernetes.io/version: 2.17.0
+          helm.sh/chart: kube-state-metrics-6.3.0
+          release: my-prometheus
+      spec:
+        automountServiceAccountToken: true
+        containers:
+        - args:
+          - --port=8080
+          - --resources=certificatesigningrequests,configmaps,cronjobs,daemonsets,deployments,endpoints,horizontalpodautoscalers,ingresses,jobs,leases,limitranges,mutatingwebhookconfigurations,namespaces,networkpolicies,nodes,persistentvolumeclaims,persistentvolumes,poddisruptionbudgets,pods,replicasets,replicationcontrollers,resourcequotas,secrets,services,statefulsets,storageclasses,validatingwebhookconfigurations,volumeattachments
+          image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.17.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /livez
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: kube-state-metrics
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 65534
+          runAsGroup: 65534
+          runAsNonRoot: true
+          runAsUser: 65534
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: my-prometheus-kube-state-metrics
+        serviceAccountName: my-prometheus-kube-state-metrics
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-09-11T04:03:24Z"
+      lastUpdateTime: "2025-09-11T04:03:37Z"
+      message: ReplicaSet "my-prometheus-kube-state-metrics-69749ff696" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-10-02T14:27:14Z"
+      lastUpdateTime: "2025-10-02T14:27:14Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "78"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"react-front"},"name":"react-front","namespace":"default"},"spec":{"replicas":1,"revisionHistoryLimit":3,"selector":{"matchLabels":{"app":"react-front"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"react-front"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["front"]}]},"weight":100},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["flutter"]}]},"weight":60}]},"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app":"react-front"}},"topologyKey":"kubernetes.io/hostname"},"weight":50}]}},"containers":[{"image":"jwon415/vote-server:front","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/","port":80},"initialDelaySeconds":15,"periodSeconds":10,"timeoutSeconds":2},"name":"react-front","ports":[{"containerPort":80}],"readinessProbe":{"failureThreshold":5,"httpGet":{"path":"/","port":80},"initialDelaySeconds":3,"periodSeconds":5,"timeoutSeconds":2},"volumeMounts":[{"mountPath":"/etc/nginx/templates/default.conf.template","name":"nginx-conf","subPath":"default.conf"}]}],"terminationGracePeriodSeconds":10,"tolerations":[{"effect":"NoExecute","key":"node.kubernetes.io/not-ready","operator":"Exists","tolerationSeconds":60},{"effect":"NoExecute","key":"node.kubernetes.io/unreachable","operator":"Exists","tolerationSeconds":60}],"topologySpreadConstraints":[{"labelSelector":{"matchLabels":{"app":"react-front"}},"maxSkew":1,"topologyKey":"kubernetes.io/hostname","whenUnsatisfiable":"ScheduleAnyway"}],"volumes":[{"configMap":{"items":[{"key":"default.conf","path":"default.conf"}],"name":"react-nginx-conf"},"name":"nginx-conf"}]}}}}
+    creationTimestamp: "2025-08-05T04:24:08Z"
+    generation: 78
+    labels:
+      app: react-front
+    name: react-front
+    namespace: default
+    resourceVersion: "6070787"
+    uid: 25337703-d04a-4c7b-876c-bb753f221f10
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app: react-front
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-09-30T11:27:19Z"
+        creationTimestamp: null
+        labels:
+          app: react-front
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - front
+              weight: 100
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - flutter
+              weight: 60
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: react-front
+                topologyKey: kubernetes.io/hostname
+              weight: 50
+        containers:
+        - image: jwon415/vote-server@sha256:41d874f67e4421bedd2e38da99783f013ffabe0da3867246b0aea4fe82ff6952
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: react-front
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/nginx/templates/default.conf.template
+            name: nginx-conf
+            subPath: default.conf
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 10
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 60
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 60
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              app: react-front
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: default.conf
+              path: default.conf
+            name: react-nginx-conf
+          name: nginx-conf
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-09-10T08:17:02Z"
+      lastUpdateTime: "2025-10-01T05:17:40Z"
+      message: ReplicaSet "react-front-75bc649695" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-10-02T14:31:22Z"
+      lastUpdateTime: "2025-10-02T14:31:22Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 78
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "23"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"spring-backend"},"name":"spring-backend","namespace":"default"},"spec":{"replicas":2,"revisionHistoryLimit":3,"selector":{"matchLabels":{"app":"spring-backend"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"spring-backend"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["spring"]}]},"weight":100},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["front"]}]},"weight":70},{"preference":{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["flutter"]}]},"weight":60}],"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/role","operator":"In","values":["spring","front","flutter"]}]}]}},"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app":"spring-backend"}},"topologyKey":"kubernetes.io/hostname"},"weight":100}]}},"containers":[{"image":"jwon415/vote-server:spring","imagePullPolicy":"Always","name":"spring","ports":[{"containerPort":8080}],"volumeMounts":[{"mountPath":"/app/.env","name":"dotenv","subPath":".env"}]}],"terminationGracePeriodSeconds":10,"tolerations":[{"effect":"NoExecute","key":"node.kubernetes.io/not-ready","operator":"Exists","tolerationSeconds":60},{"effect":"NoExecute","key":"node.kubernetes.io/unreachable","operator":"Exists","tolerationSeconds":60}],"topologySpreadConstraints":[{"labelSelector":{"matchLabels":{"app":"spring-backend"}},"maxSkew":1,"topologyKey":"kubernetes.io/hostname","whenUnsatisfiable":"ScheduleAnyway"}],"volumes":[{"configMap":{"items":[{"key":".env","path":".env"}],"name":"spring-dotenv"},"name":"dotenv"}]}}}}
+    creationTimestamp: "2025-09-09T06:27:20Z"
+    generation: 73
+    labels:
+      app: spring-backend
+    name: spring-backend
+    namespace: default
+    resourceVersion: "5921392"
+    uid: c2df29a8-fe35-4d32-9915-9777de646570
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app: spring-backend
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2025-09-30T11:55:13Z"
+        creationTimestamp: null
+        labels:
+          app: spring-backend
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - spring
+              weight: 100
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - front
+              weight: 70
+            - preference:
+                matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - flutter
+              weight: 60
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/role
+                  operator: In
+                  values:
+                  - spring
+                  - front
+                  - flutter
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: spring-backend
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - image: jwon415/vote-server@sha256:4dcf12e0fbb94ecd5d0dd58a7c8246da56cc7c0611aed2a0496760d4116a5f0e
+          imagePullPolicy: Always
+          name: spring
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/.env
+            name: dotenv
+            subPath: .env
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 10
+        tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 60
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 60
+        topologySpreadConstraints:
+        - labelSelector:
+            matchLabels:
+              app: spring-backend
+          maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: .env
+              path: .env
+            name: spring-dotenv
+          name: dotenv
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2025-09-09T06:27:20Z"
+      lastUpdateTime: "2025-09-30T12:54:48Z"
+      message: ReplicaSet "spring-backend-6d549d58c7" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-10-01T01:16:56Z"
+      lastUpdateTime: "2025-10-01T01:16:56Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 73
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/component: metrics
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: prometheus-node-exporter
+      app.kubernetes.io/part-of: prometheus-node-exporter
+      app.kubernetes.io/version: 1.9.1
+      helm.sh/chart: prometheus-node-exporter-4.47.3
+      release: my-prometheus
+    name: my-prometheus-prometheus-node-exporter
+    namespace: default
+    resourceVersion: "6070756"
+    uid: 77fc8765-5774-4fed-bed6-5bc940d94364
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: my-prometheus
+        app.kubernetes.io/name: prometheus-node-exporter
+    template:
+      metadata:
+        annotations:
+          cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: metrics
+          app.kubernetes.io/instance: my-prometheus
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: prometheus-node-exporter
+          app.kubernetes.io/part-of: prometheus-node-exporter
+          app.kubernetes.io/version: 1.9.1
+          helm.sh/chart: prometheus-node-exporter-4.47.3
+          jobLabel: node-exporter
+          release: my-prometheus
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: eks.amazonaws.com/compute-type
+                  operator: NotIn
+                  values:
+                  - fargate
+                - key: type
+                  operator: NotIn
+                  values:
+                  - virtual-kubelet
+        automountServiceAccountToken: false
+        containers:
+        - args:
+          - --path.procfs=/host/proc
+          - --path.sysfs=/host/sys
+          - --path.rootfs=/host/root
+          - --path.udev.data=/host/root/run/udev/data
+          - --web.listen-address=[$(HOST_IP)]:9100
+          - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+          - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|erofs)$
+          env:
+          - name: HOST_IP
+            value: 0.0.0.0
+          image: quay.io/prometheus/node-exporter:v1.9.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: http-metrics
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: node-exporter
+          ports:
+          - containerPort: 9100
+            name: http-metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: http-metrics
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          securityContext:
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host/proc
+            name: proc
+            readOnly: true
+          - mountPath: /host/sys
+            name: sys
+            readOnly: true
+          - mountPath: /host/root
+            mountPropagation: HostToContainer
+            name: root
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        hostNetwork: true
+        hostPID: true
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 65534
+          runAsGroup: 65534
+          runAsNonRoot: true
+          runAsUser: 65534
+        serviceAccount: my-prometheus-prometheus-node-exporter
+        serviceAccountName: my-prometheus-prometheus-node-exporter
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /proc
+            type: ""
+          name: proc
+        - hostPath:
+            path: /sys
+            type: ""
+          name: sys
+        - hostPath:
+            path: /
+            type: ""
+          name: root
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 6
+    desiredNumberScheduled: 6
+    numberAvailable: 6
+    numberMisscheduled: 0
+    numberReady: 6
+    observedGeneration: 1
+    updatedNumberScheduled: 6
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+      prometheus-operator-input-hash: "13235294121758988667"
+    creationTimestamp: "2025-09-11T04:03:26Z"
+    generation: 3
+    labels:
+      alertmanager: my-prometheus-kube-prometh-alertmanager
+      app: kube-prometheus-stack-alertmanager
+      app.kubernetes.io/instance: my-prometheus-kube-prometh-alertmanager
+      app.kubernetes.io/managed-by: prometheus-operator
+      app.kubernetes.io/name: alertmanager
+      app.kubernetes.io/part-of: kube-prometheus-stack
+      app.kubernetes.io/version: 77.6.1
+      chart: kube-prometheus-stack-77.6.1
+      heritage: Helm
+      managed-by: prometheus-operator
+      release: my-prometheus
+    name: alertmanager-my-prometheus-kube-prometh-alertmanager
+    namespace: default
+    ownerReferences:
+    - apiVersion: monitoring.coreos.com/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Alertmanager
+      name: my-prometheus-kube-prometh-alertmanager
+      uid: 64e7937e-f57f-45f4-9baf-39828e016298
+    resourceVersion: "5276510"
+    uid: ff89dff0-677d-49d1-8652-a300ae662be4
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: Parallel
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        alertmanager: my-prometheus-kube-prometh-alertmanager
+        app.kubernetes.io/instance: my-prometheus-kube-prometh-alertmanager
+        app.kubernetes.io/managed-by: prometheus-operator
+        app.kubernetes.io/name: alertmanager
+    serviceName: alertmanager-operated
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/default-container: alertmanager
+          kubectl.kubernetes.io/restartedAt: "2025-09-13T04:28:33Z"
+        creationTimestamp: null
+        labels:
+          alertmanager: my-prometheus-kube-prometh-alertmanager
+          app.kubernetes.io/instance: my-prometheus-kube-prometh-alertmanager
+          app.kubernetes.io/managed-by: prometheus-operator
+          app.kubernetes.io/name: alertmanager
+          app.kubernetes.io/version: 0.28.1
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                    - alertmanager
+                  - key: alertmanager
+                    operator: In
+                    values:
+                    - my-prometheus-kube-prometh-alertmanager
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        automountServiceAccountToken: true
+        containers:
+        - args:
+          - --config.file=/etc/alertmanager/config_out/alertmanager.env.yaml
+          - --storage.path=/alertmanager
+          - --data.retention=120h
+          - --cluster.listen-address=
+          - --web.listen-address=:9093
+          - --web.external-url=http://my-prometheus-kube-prometh-alertmanager.default:9093
+          - --web.route-prefix=/
+          - --cluster.label=default/my-prometheus-kube-prometh-alertmanager
+          - --cluster.peer=alertmanager-my-prometheus-kube-prometh-alertmanager-0.alertmanager-operated:9094
+          - --cluster.reconnect-timeout=5m
+          - --web.config.file=/etc/alertmanager/web_config/web-config.yaml
+          env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          image: quay.io/prometheus/alertmanager:v0.28.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /-/healthy
+              port: http-web
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 3
+          name: alertmanager
+          ports:
+          - containerPort: 9093
+            name: http-web
+            protocol: TCP
+          - containerPort: 9094
+            name: mesh-tcp
+            protocol: TCP
+          - containerPort: 9094
+            name: mesh-udp
+            protocol: UDP
+          readinessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /-/ready
+              port: http-web
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            requests:
+              memory: 200Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/alertmanager/config
+            name: config-volume
+          - mountPath: /etc/alertmanager/config_out
+            name: config-out
+            readOnly: true
+          - mountPath: /etc/alertmanager/certs
+            name: tls-assets
+            readOnly: true
+          - mountPath: /alertmanager
+            name: alertmanager-my-prometheus-kube-prometh-alertmanager-db
+          - mountPath: /etc/alertmanager/web_config/web-config.yaml
+            name: web-config
+            readOnly: true
+            subPath: web-config.yaml
+          - mountPath: /etc/alertmanager/cluster_tls_config/cluster-tls-config.yaml
+            name: cluster-tls-config
+            readOnly: true
+            subPath: cluster-tls-config.yaml
+        - args:
+          - --listen-address=:8080
+          - --web-config-file=/etc/alertmanager/web_config/web-config.yaml
+          - --reload-url=http://127.0.0.1:9093/-/reload
+          - --config-file=/etc/alertmanager/config/alertmanager.yaml.gz
+          - --config-envsubst-file=/etc/alertmanager/config_out/alertmanager.env.yaml
+          - --watched-dir=/etc/alertmanager/config
+          command:
+          - /bin/prometheus-config-reloader
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: SHARD
+            value: "-1"
+          image: quay.io/prometheus-operator/prometheus-config-reloader:v0.85.0
+          imagePullPolicy: IfNotPresent
+          name: config-reloader
+          ports:
+          - containerPort: 8080
+            name: reloader-web
+            protocol: TCP
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/alertmanager/config
+            name: config-volume
+            readOnly: true
+          - mountPath: /etc/alertmanager/config_out
+            name: config-out
+          - mountPath: /etc/alertmanager/web_config/web-config.yaml
+            name: web-config
+            readOnly: true
+            subPath: web-config.yaml
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - args:
+          - --watch-interval=0
+          - --listen-address=:8081
+          - --config-file=/etc/alertmanager/config/alertmanager.yaml.gz
+          - --config-envsubst-file=/etc/alertmanager/config_out/alertmanager.env.yaml
+          - --watched-dir=/etc/alertmanager/config
+          command:
+          - /bin/prometheus-config-reloader
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: SHARD
+            value: "-1"
+          image: quay.io/prometheus-operator/prometheus-config-reloader:v0.85.0
+          imagePullPolicy: IfNotPresent
+          name: init-config-reloader
+          ports:
+          - containerPort: 8081
+            name: reloader-web
+            protocol: TCP
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/alertmanager/config
+            name: config-volume
+            readOnly: true
+          - mountPath: /etc/alertmanager/config_out
+            name: config-out
+          - mountPath: /etc/alertmanager/web_config/web-config.yaml
+            name: web-config
+            readOnly: true
+            subPath: web-config.yaml
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 2000
+          runAsGroup: 2000
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: my-prometheus-kube-prometh-alertmanager
+        serviceAccountName: my-prometheus-kube-prometh-alertmanager
+        terminationGracePeriodSeconds: 120
+        volumes:
+        - name: config-volume
+          secret:
+            defaultMode: 420
+            secretName: alertmanager-my-prometheus-kube-prometh-alertmanager-generated
+        - name: tls-assets
+          projected:
+            defaultMode: 420
+            sources:
+            - secret:
+                name: alertmanager-my-prometheus-kube-prometh-alertmanager-tls-assets-0
+        - emptyDir:
+            medium: Memory
+          name: config-out
+        - name: web-config
+          secret:
+            defaultMode: 420
+            secretName: alertmanager-my-prometheus-kube-prometh-alertmanager-web-config
+        - name: cluster-tls-config
+          secret:
+            defaultMode: 420
+            secretName: alertmanager-my-prometheus-kube-prometh-alertmanager-cluster-tls-config
+        - emptyDir: {}
+          name: alertmanager-my-prometheus-kube-prometh-alertmanager-db
+    updateStrategy:
+      type: RollingUpdate
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: alertmanager-my-prometheus-kube-prometh-alertmanager-b666bbd4b
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: alertmanager-my-prometheus-kube-prometh-alertmanager-b666bbd4b
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+      prometheus-operator-input-hash: "5377190588063524263"
+    creationTimestamp: "2025-09-11T04:03:27Z"
+    generation: 3
+    labels:
+      app: kube-prometheus-stack-prometheus
+      app.kubernetes.io/instance: my-prometheus-kube-prometh-prometheus
+      app.kubernetes.io/managed-by: prometheus-operator
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/part-of: kube-prometheus-stack
+      app.kubernetes.io/version: 77.6.1
+      chart: kube-prometheus-stack-77.6.1
+      heritage: Helm
+      managed-by: prometheus-operator
+      operator.prometheus.io/mode: server
+      operator.prometheus.io/name: my-prometheus-kube-prometh-prometheus
+      operator.prometheus.io/shard: "0"
+      prometheus: my-prometheus-kube-prometh-prometheus
+      release: my-prometheus
+    name: prometheus-my-prometheus-kube-prometh-prometheus
+    namespace: default
+    ownerReferences:
+    - apiVersion: monitoring.coreos.com/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Prometheus
+      name: my-prometheus-kube-prometh-prometheus
+      uid: 9ea0fac5-d591-4ed1-9c02-81a89b791f38
+    resourceVersion: "5276958"
+    uid: 42f8b2cd-08b9-4304-9bb5-8b0dfd4d02ad
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: Parallel
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: my-prometheus-kube-prometh-prometheus
+        app.kubernetes.io/managed-by: prometheus-operator
+        app.kubernetes.io/name: prometheus
+        operator.prometheus.io/name: my-prometheus-kube-prometh-prometheus
+        operator.prometheus.io/shard: "0"
+        prometheus: my-prometheus-kube-prometh-prometheus
+    serviceName: prometheus-operated
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/default-container: prometheus
+          kubectl.kubernetes.io/restartedAt: "2025-09-13T04:31:00Z"
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/instance: my-prometheus-kube-prometh-prometheus
+          app.kubernetes.io/managed-by: prometheus-operator
+          app.kubernetes.io/name: prometheus
+          app.kubernetes.io/version: 3.5.0
+          operator.prometheus.io/name: my-prometheus-kube-prometh-prometheus
+          operator.prometheus.io/shard: "0"
+          prometheus: my-prometheus-kube-prometh-prometheus
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                    - prometheus
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                    - my-prometheus-kube-prometh-prometheus
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        automountServiceAccountToken: true
+        containers:
+        - args:
+          - --config.file=/etc/prometheus/config_out/prometheus.env.yaml
+          - --web.enable-lifecycle
+          - --web.external-url=http://my-prometheus-kube-prometh-prometheus.default:9090
+          - --web.route-prefix=/
+          - --storage.tsdb.retention.time=10d
+          - --storage.tsdb.path=/prometheus
+          - --storage.tsdb.wal-compression
+          - --web.config.file=/etc/prometheus/web_config/web-config.yaml
+          image: quay.io/prometheus/prometheus:v3.5.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /-/healthy
+              port: http-web
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          name: prometheus
+          ports:
+          - containerPort: 9090
+            name: http-web
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /-/ready
+              port: http-web
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          startupProbe:
+            failureThreshold: 60
+            httpGet:
+              path: /-/ready
+              port: http-web
+              scheme: HTTP
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 3
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/prometheus/config_out
+            name: config-out
+            readOnly: true
+          - mountPath: /etc/prometheus/certs
+            name: tls-assets
+            readOnly: true
+          - mountPath: /prometheus
+            name: prometheus-my-prometheus-kube-prometh-prometheus-db
+          - mountPath: /etc/prometheus/rules/prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+            name: prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+          - mountPath: /etc/prometheus/web_config/web-config.yaml
+            name: web-config
+            readOnly: true
+            subPath: web-config.yaml
+        - args:
+          - --listen-address=:8080
+          - --reload-url=http://127.0.0.1:9090/-/reload
+          - --config-file=/etc/prometheus/config/prometheus.yaml.gz
+          - --config-envsubst-file=/etc/prometheus/config_out/prometheus.env.yaml
+          - --watched-dir=/etc/prometheus/rules/prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+          command:
+          - /bin/prometheus-config-reloader
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: SHARD
+            value: "0"
+          image: quay.io/prometheus-operator/prometheus-config-reloader:v0.85.0
+          imagePullPolicy: IfNotPresent
+          name: config-reloader
+          ports:
+          - containerPort: 8080
+            name: reloader-web
+            protocol: TCP
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/prometheus/config
+            name: config
+          - mountPath: /etc/prometheus/config_out
+            name: config-out
+          - mountPath: /etc/prometheus/rules/prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+            name: prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - args:
+          - --watch-interval=0
+          - --listen-address=:8081
+          - --config-file=/etc/prometheus/config/prometheus.yaml.gz
+          - --config-envsubst-file=/etc/prometheus/config_out/prometheus.env.yaml
+          - --watched-dir=/etc/prometheus/rules/prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+          command:
+          - /bin/prometheus-config-reloader
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: SHARD
+            value: "0"
+          image: quay.io/prometheus-operator/prometheus-config-reloader:v0.85.0
+          imagePullPolicy: IfNotPresent
+          name: init-config-reloader
+          ports:
+          - containerPort: 8081
+            name: reloader-web
+            protocol: TCP
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: FallbackToLogsOnError
+          volumeMounts:
+          - mountPath: /etc/prometheus/config
+            name: config
+          - mountPath: /etc/prometheus/config_out
+            name: config-out
+          - mountPath: /etc/prometheus/rules/prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+            name: prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 2000
+          runAsGroup: 2000
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount: my-prometheus-kube-prometh-prometheus
+        serviceAccountName: my-prometheus-kube-prometh-prometheus
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 600
+        volumes:
+        - name: config
+          secret:
+            defaultMode: 420
+            secretName: prometheus-my-prometheus-kube-prometh-prometheus
+        - name: tls-assets
+          projected:
+            defaultMode: 420
+            sources:
+            - secret:
+                name: prometheus-my-prometheus-kube-prometh-prometheus-tls-assets-0
+        - emptyDir:
+            medium: Memory
+          name: config-out
+        - configMap:
+            defaultMode: 420
+            name: prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+          name: prometheus-my-prometheus-kube-prometh-prometheus-rulefiles-0
+        - name: web-config
+          secret:
+            defaultMode: 420
+            secretName: prometheus-my-prometheus-kube-prometh-prometheus-web-config
+        - emptyDir: {}
+          name: prometheus-my-prometheus-kube-prometh-prometheus-db
+    updateStrategy:
+      type: RollingUpdate
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: prometheus-my-prometheus-kube-prometh-prometheus-5788c57445
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: prometheus-my-prometheus-kube-prometh-prometheus-5788c57445
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

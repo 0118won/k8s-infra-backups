@@ -1,0 +1,10 @@
+# 템프/압축
+*.tar.gz
+*.tgz
+*.zip
+# kube 캐시
+.kube/
+# 민감 증거물(원하면 제외)
+*.crt
+*.key
+*.pem

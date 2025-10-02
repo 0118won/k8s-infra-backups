@@ -1,0 +1,212 @@
+apiVersion: v1
+items:
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    annotations:
+      cert-manager.io/inject-ca-from-secret: cert-manager/cert-manager-webhook-ca
+      meta.helm.sh/release-name: cert-manager
+      meta.helm.sh/release-namespace: cert-manager
+    creationTimestamp: "2025-09-11T13:54:09Z"
+    generation: 2
+    labels:
+      app: webhook
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: webhook
+      app.kubernetes.io/version: v1.13.2
+      helm.sh/chart: cert-manager-v1.13.2
+    name: cert-manager-webhook
+    resourceVersion: "4218060"
+    uid: d1967285-218e-4b2c-888c-88e6e4e84371
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJ3ekNDQVVpZ0F3SUJBZ0lSQU0xdytTT01GNWpuRTVSampkaU0zTGN3Q2dZSUtvWkl6ajBFQXdNd0lqRWcKTUI0R0ExVUVBeE1YWTJWeWRDMXRZVzVoWjJWeUxYZGxZbWh2YjJzdFkyRXdIaGNOTWpVd09URXhNVE0xTkRFNQpXaGNOTWpZd09URXhNVE0xTkRFNVdqQWlNU0F3SGdZRFZRUURFeGRqWlhKMExXMWhibUZuWlhJdGQyVmlhRzl2CmF5MWpZVEIyTUJBR0J5cUdTTTQ5QWdFR0JTdUJCQUFpQTJJQUJEaDRVWjNtUDRoRGVrTFJLaVhESlcraXBUbEYKQTVYNTdQeThQbGsxaDNMR1dCcEhzS3ZmdEZ4NmhoREJ3cWZjNHhWK2hyTDdGeUhZbjNKUm15d3Rxd1MxMWJzTgpNV1VlK2syZ3RhenhFbTA0RjVJL0xlUGhMMk5uTzA3bmk0RC9zS05DTUVBd0RnWURWUjBQQVFIL0JBUURBZ0trCk1BOEdBMVVkRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZOTmxOZW4xd0k3bVp4ZDg3QzdqZVpyN0l4YXEKTUFvR0NDcUdTTTQ5QkFNREEya0FNR1lDTVFDcEJHTEFISTR3UmdVWDMybk5wMEJJL3I4S29OMXJ4eEx6TklBRQpMdVRPb0JVU0FIYSswUmNKS0lvdnJUc2JDM3dDTVFEL21sVVdZN1dORHZSajdRWmxCUkY1TjhzbmNWNXRHZGtOCjFkemY0aGNveHBIUDFPTmpFVWVDTUZMdW4zTFhHREE9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+      service:
+        name: cert-manager-webhook
+        namespace: cert-manager
+        path: /validate
+        port: 443
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: webhook.cert-manager.io
+    namespaceSelector:
+      matchExpressions:
+      - key: cert-manager.io/disable-validation
+        operator: NotIn
+        values:
+        - "true"
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - cert-manager.io
+      - acme.cert-manager.io
+      apiVersions:
+      - v1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - '*/*'
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    generation: 2
+    labels:
+      app: kube-prometheus-stack-admission
+      app.kubernetes.io/component: prometheus-operator-webhook
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
+      app.kubernetes.io/part-of: kube-prometheus-stack
+      app.kubernetes.io/version: 77.6.1
+      chart: kube-prometheus-stack-77.6.1
+      heritage: Helm
+      release: my-prometheus
+    name: my-prometheus-kube-prometh-admission
+    resourceVersion: "4299909"
+    uid: 470ad096-c223-4d26-a0dd-82c2c63f4bbb
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    - v1beta1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkVENDQVJ5Z0F3SUJBZ0lSQUowQmg5Z0JWNFJZNGR1RGlLS3FDTU13Q2dZSUtvWkl6ajBFQXdJd0R6RU4KTUFzR0ExVUVDaE1FYm1sc01UQWdGdzB5TlRBNU1URXdNelU0TWpGYUdBOHlNVEkxTURneE9EQXpOVGd5TVZvdwpEekVOTUFzR0ExVUVDaE1FYm1sc01UQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJOTEhYZVpMCktXdjZ6UXg2bmFOZVBaNXpsZktOWXUxUWJ1Smx1SStadzBHZ3hOUWo3Y2lwbmdnYnVIWUFmc2lZcFdoelZqY04KNXg0R2cxM2xpcWNZY2NLalZ6QlZNQTRHQTFVZER3RUIvd1FFQXdJQ0JEQVRCZ05WSFNVRUREQUtCZ2dyQmdFRgpCUWNEQVRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUQVkwL0xzc215eTkrMkJXeG5JY2plClBFeGJlVEFLQmdncWhrak9QUVFEQWdOSEFEQkVBaUE2V2JZY2k2cDd6Nnl2cUxhNko4ckVabGNGRU9tT0FXb2YKc1AyL2x6RTBRd0lnQklSY1BXSDg5WEsweE5xQ21UeE0zQmZPcTluM04wYnBOY01aZ2NUejgyOD0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      service:
+        name: my-prometheus-kube-prometh-operator
+        namespace: default
+        path: /admission-prometheusrules/validate
+        port: 443
+    failurePolicy: Ignore
+    matchPolicy: Equivalent
+    name: prometheusrulemutate.monitoring.coreos.com
+    namespaceSelector: {}
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - monitoring.coreos.com
+      apiVersions:
+      - '*'
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - prometheusrules
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: MutatingWebhookConfiguration
+  metadata:
+    annotations:
+      cert-manager.io/inject-ca-from-secret: cert-manager/cert-manager-webhook-ca
+      meta.helm.sh/release-name: cert-manager
+      meta.helm.sh/release-namespace: cert-manager
+    creationTimestamp: "2025-09-11T13:54:09Z"
+    generation: 2
+    labels:
+      app: webhook
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: webhook
+      app.kubernetes.io/version: v1.13.2
+      helm.sh/chart: cert-manager-v1.13.2
+    name: cert-manager-webhook
+    resourceVersion: "4218059"
+    uid: 06a734ea-943c-4c23-8316-a867f0ac2590
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJ3ekNDQVVpZ0F3SUJBZ0lSQU0xdytTT01GNWpuRTVSampkaU0zTGN3Q2dZSUtvWkl6ajBFQXdNd0lqRWcKTUI0R0ExVUVBeE1YWTJWeWRDMXRZVzVoWjJWeUxYZGxZbWh2YjJzdFkyRXdIaGNOTWpVd09URXhNVE0xTkRFNQpXaGNOTWpZd09URXhNVE0xTkRFNVdqQWlNU0F3SGdZRFZRUURFeGRqWlhKMExXMWhibUZuWlhJdGQyVmlhRzl2CmF5MWpZVEIyTUJBR0J5cUdTTTQ5QWdFR0JTdUJCQUFpQTJJQUJEaDRVWjNtUDRoRGVrTFJLaVhESlcraXBUbEYKQTVYNTdQeThQbGsxaDNMR1dCcEhzS3ZmdEZ4NmhoREJ3cWZjNHhWK2hyTDdGeUhZbjNKUm15d3Rxd1MxMWJzTgpNV1VlK2syZ3RhenhFbTA0RjVJL0xlUGhMMk5uTzA3bmk0RC9zS05DTUVBd0RnWURWUjBQQVFIL0JBUURBZ0trCk1BOEdBMVVkRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZOTmxOZW4xd0k3bVp4ZDg3QzdqZVpyN0l4YXEKTUFvR0NDcUdTTTQ5QkFNREEya0FNR1lDTVFDcEJHTEFISTR3UmdVWDMybk5wMEJJL3I4S29OMXJ4eEx6TklBRQpMdVRPb0JVU0FIYSswUmNKS0lvdnJUc2JDM3dDTVFEL21sVVdZN1dORHZSajdRWmxCUkY1TjhzbmNWNXRHZGtOCjFkemY0aGNveHBIUDFPTmpFVWVDTUZMdW4zTFhHREE9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+      service:
+        name: cert-manager-webhook
+        namespace: cert-manager
+        path: /mutate
+        port: 443
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: webhook.cert-manager.io
+    namespaceSelector: {}
+    objectSelector: {}
+    reinvocationPolicy: Never
+    rules:
+    - apiGroups:
+      - cert-manager.io
+      - acme.cert-manager.io
+      apiVersions:
+      - v1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - '*/*'
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: MutatingWebhookConfiguration
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    generation: 2
+    labels:
+      app: kube-prometheus-stack-admission
+      app.kubernetes.io/component: prometheus-operator-webhook
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
+      app.kubernetes.io/part-of: kube-prometheus-stack
+      app.kubernetes.io/version: 77.6.1
+      chart: kube-prometheus-stack-77.6.1
+      heritage: Helm
+      release: my-prometheus
+    name: my-prometheus-kube-prometh-admission
+    resourceVersion: "4299825"
+    uid: ca488690-de9d-466e-a9c4-77fb98e4fb32
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    - v1beta1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkVENDQVJ5Z0F3SUJBZ0lSQUowQmg5Z0JWNFJZNGR1RGlLS3FDTU13Q2dZSUtvWkl6ajBFQXdJd0R6RU4KTUFzR0ExVUVDaE1FYm1sc01UQWdGdzB5TlRBNU1URXdNelU0TWpGYUdBOHlNVEkxTURneE9EQXpOVGd5TVZvdwpEekVOTUFzR0ExVUVDaE1FYm1sc01UQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJOTEhYZVpMCktXdjZ6UXg2bmFOZVBaNXpsZktOWXUxUWJ1Smx1SStadzBHZ3hOUWo3Y2lwbmdnYnVIWUFmc2lZcFdoelZqY04KNXg0R2cxM2xpcWNZY2NLalZ6QlZNQTRHQTFVZER3RUIvd1FFQXdJQ0JEQVRCZ05WSFNVRUREQUtCZ2dyQmdFRgpCUWNEQVRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUQVkwL0xzc215eTkrMkJXeG5JY2plClBFeGJlVEFLQmdncWhrak9QUVFEQWdOSEFEQkVBaUE2V2JZY2k2cDd6Nnl2cUxhNko4ckVabGNGRU9tT0FXb2YKc1AyL2x6RTBRd0lnQklSY1BXSDg5WEsweE5xQ21UeE0zQmZPcTluM04wYnBOY01aZ2NUejgyOD0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      service:
+        name: my-prometheus-kube-prometh-operator
+        namespace: default
+        path: /admission-prometheusrules/mutate
+        port: 443
+    failurePolicy: Ignore
+    matchPolicy: Equivalent
+    name: prometheusrulemutate.monitoring.coreos.com
+    namespaceSelector: {}
+    objectSelector: {}
+    reinvocationPolicy: Never
+    rules:
+    - apiGroups:
+      - monitoring.coreos.com
+      apiVersions:
+      - '*'
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - prometheusrules
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+kind: List
+metadata:
+  resourceVersion: ""

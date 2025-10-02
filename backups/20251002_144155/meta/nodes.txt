@@ -1,0 +1,7 @@
+NAME        STATUS   ROLES                  AGE   VERSION        INTERNAL-IP       EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+vm112       Ready    front                  58d   v1.33.3+k3s1   192.168.222.112   <none>        Ubuntu 24.04.2 LTS   6.8.0-83-generic   containerd://2.0.5-k3s2
+vpc         Ready    control-plane,master   95d   v1.32.5+k3s1   192.168.222.113   <none>        Ubuntu 24.04.2 LTS   6.8.0-83-generic   containerd://2.0.5-k3s1.32
+worker111   Ready    spring                 85d   v1.32.6+k3s1   192.168.222.111   <none>        Ubuntu 24.04.2 LTS   6.8.0-83-generic   containerd://2.0.5-k3s1.32
+worker114   Ready    blockchain             85d   v1.32.6+k3s1   192.168.222.114   <none>        Ubuntu 24.04.2 LTS   6.8.0-83-generic   containerd://2.0.5-k3s1.32
+worker116   Ready    flutter                7d    v1.33.4+k3s1   192.168.222.116   <none>        Ubuntu 24.04.2 LTS   6.8.0-60-generic   containerd://2.0.5-k3s2
+worker15    Ready    mongo                  85d   v1.32.6+k3s1   192.168.222.115   <none>        Ubuntu 24.04.2 LTS   6.8.0-83-generic   containerd://2.0.5-k3s1.32

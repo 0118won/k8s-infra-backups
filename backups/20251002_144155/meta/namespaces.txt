@@ -1,0 +1,6 @@
+NAME              STATUS   AGE
+default           Active   95d
+kube-node-lease   Active   95d
+kube-public       Active   95d
+kube-system       Active   95d
+monitoring        Active   23d
