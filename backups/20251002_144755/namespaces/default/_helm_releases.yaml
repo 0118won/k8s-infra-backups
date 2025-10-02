@@ -1,0 +1,7 @@
+- app_version: v0.85.0
+  chart: kube-prometheus-stack-77.6.1
+  name: my-prometheus
+  namespace: default
+  revision: "19"
+  status: deployed
+  updated: 2025-10-01 01:12:17.160809197 +0000 UTC

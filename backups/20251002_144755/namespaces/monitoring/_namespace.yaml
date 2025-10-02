@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: "2025-09-09T05:40:10Z"
+  labels:
+    kubernetes.io/metadata.name: monitoring
+  name: monitoring
+  resourceVersion: "4036788"
+  uid: 74def983-f63e-4d2f-af0c-c2e7b66953a3
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

@@ -1,0 +1,672 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2025-09-11T04:03:26Z"
+    labels:
+      managed-by: prometheus-operator
+      operated-alertmanager: "true"
+    name: alertmanager-operated
+    namespace: default
+    ownerReferences:
+    - apiVersion: monitoring.coreos.com/v1
+      kind: Alertmanager
+      name: my-prometheus-kube-prometh-alertmanager
+      uid: 64e7937e-f57f-45f4-9baf-39828e016298
+    resourceVersion: "4185637"
+    uid: 4bd8f2d4-5eed-4be9-972c-4c9ce9dea130
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http-web
+      port: 9093
+      protocol: TCP
+      targetPort: http-web
+    - name: tcp-mesh
+      port: 9094
+      protocol: TCP
+      targetPort: mesh-tcp
+    - name: udp-mesh
+      port: 9094
+      protocol: UDP
+      targetPort: mesh-udp
+    publishNotReadyAddresses: true
+    selector:
+      app.kubernetes.io/name: alertmanager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"blockchain-node"},"name":"blockchain-node","namespace":"default"},"spec":{"ports":[{"name":"grpc-proposal","nodePort":31000,"port":9000,"protocol":"TCP","targetPort":9000},{"name":"grpc-submit","nodePort":31001,"port":9001,"protocol":"TCP","targetPort":9001},{"name":"grpc-admin-command","nodePort":31010,"port":9010,"protocol":"TCP","targetPort":9010},{"name":"rest-explorer","nodePort":31100,"port":9100,"protocol":"TCP","targetPort":9100}],"selector":{"app":"blockchain-node"},"type":"NodePort"}}
+    creationTimestamp: "2025-07-09T14:35:04Z"
+    labels:
+      app: blockchain-node
+    name: blockchain-node
+    namespace: default
+    resourceVersion: "5866872"
+    uid: 05c54468-ea10-4836-a5e1-2d57329c12a4
+  spec:
+    clusterIP: 10.43.124.55
+    clusterIPs:
+    - 10.43.124.55
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: grpc-proposal
+      nodePort: 31000
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: grpc-submit
+      nodePort: 31001
+      port: 9001
+      protocol: TCP
+      targetPort: 9001
+    - name: grpc-admin-command
+      nodePort: 31010
+      port: 9010
+      protocol: TCP
+      targetPort: 9010
+    - name: rest-explorer
+      nodePort: 31100
+      port: 9100
+      protocol: TCP
+      targetPort: 9100
+    selector:
+      app: blockchain-node
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"caching-server"},"name":"caching-service","namespace":"default"},"spec":{"ports":[{"name":"grpc-cache","nodePort":30051,"port":50051,"protocol":"TCP","targetPort":50051}],"selector":{"app":"caching-server"},"type":"NodePort"}}
+    creationTimestamp: "2025-07-10T02:40:43Z"
+    labels:
+      app: caching-server
+    name: caching-service
+    namespace: default
+    resourceVersion: "5867675"
+    uid: 9a582ded-5124-428a-9b31-49095c0b2d38
+  spec:
+    clusterIP: 10.43.126.108
+    clusterIPs:
+    - 10.43.126.108
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: grpc-cache
+      nodePort: 30051
+      port: 50051
+      protocol: TCP
+      targetPort: 50051
+    selector:
+      app: caching-server
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"flutter-app"},"name":"flutter-service","namespace":"default"},"spec":{"ports":[{"name":"http","port":80,"protocol":"TCP","targetPort":80}],"selector":{"app":"flutter-app"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-09-22T16:03:51Z"
+    labels:
+      app: flutter-app
+    name: flutter-service
+    namespace: default
+    resourceVersion: "5409532"
+    uid: 0d1e8700-e600-4059-8e32-aaa9645b495e
+  spec:
+    clusterIP: 10.43.203.227
+    clusterIPs:
+    - 10.43.203.227
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: flutter-app
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2025-06-28T15:28:49Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "56"
+    uid: 7e91af11-2214-4b4c-8398-c212a68e44c8
+  spec:
+    clusterIP: 10.43.0.1
+    clusterIPs:
+    - 10.43.0.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 6443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    labels:
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: grafana
+      app.kubernetes.io/version: 12.1.1
+      helm.sh/chart: grafana-9.4.5
+    name: my-prometheus-grafana
+    namespace: default
+    resourceVersion: "4299772"
+    uid: 7fd64e20-2721-43d3-b5e8-684ca60d53a0
+  spec:
+    clusterIP: 10.43.154.30
+    clusterIPs:
+    - 10.43.154.30
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http-web
+      port: 80
+      protocol: TCP
+      targetPort: grafana
+    selector:
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/name: grafana
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    labels:
+      app: kube-prometheus-stack-alertmanager
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/part-of: kube-prometheus-stack
+      app.kubernetes.io/version: 77.6.1
+      chart: kube-prometheus-stack-77.6.1
+      heritage: Helm
+      release: my-prometheus
+      self-monitor: "true"
+    name: my-prometheus-kube-prometh-alertmanager
+    namespace: default
+    resourceVersion: "4299775"
+    uid: 47c3c4c4-38bc-4aa4-9d3f-bfba8848bab8
+  spec:
+    clusterIP: 10.43.125.120
+    clusterIPs:
+    - 10.43.125.120
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http-web
+      port: 9093
+      protocol: TCP
+      targetPort: 9093
+    - appProtocol: http
+      name: reloader-web
+      port: 8080
+      protocol: TCP
+      targetPort: reloader-web
+    selector:
+      alertmanager: my-prometheus-kube-prometh-alertmanager
+      app.kubernetes.io/name: alertmanager
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    labels:
+      app: kube-prometheus-stack-operator
+      app.kubernetes.io/component: prometheus-operator
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
+      app.kubernetes.io/part-of: kube-prometheus-stack
+      app.kubernetes.io/version: 77.6.1
+      chart: kube-prometheus-stack-77.6.1
+      heritage: Helm
+      release: my-prometheus
+    name: my-prometheus-kube-prometh-operator
+    namespace: default
+    resourceVersion: "4299794"
+    uid: 03db14ab-bb53-4237-8720-f08d20b76b29
+  spec:
+    clusterIP: 10.43.77.9
+    clusterIPs:
+    - 10.43.77.9
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+    selector:
+      app: kube-prometheus-stack-operator
+      release: my-prometheus
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    labels:
+      app: kube-prometheus-stack-prometheus
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/part-of: kube-prometheus-stack
+      app.kubernetes.io/version: 77.6.1
+      chart: kube-prometheus-stack-77.6.1
+      heritage: Helm
+      release: my-prometheus
+      self-monitor: "true"
+    name: my-prometheus-kube-prometh-prometheus
+    namespace: default
+    resourceVersion: "4299795"
+    uid: c78bd407-10ed-40c3-a471-400f1ad9e1f5
+  spec:
+    clusterIP: 10.43.144.90
+    clusterIPs:
+    - 10.43.144.90
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http-web
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+    - appProtocol: http
+      name: reloader-web
+      port: 8080
+      protocol: TCP
+      targetPort: reloader-web
+    selector:
+      app.kubernetes.io/name: prometheus
+      operator.prometheus.io/name: my-prometheus-kube-prometh-prometheus
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    labels:
+      app.kubernetes.io/component: metrics
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kube-state-metrics
+      app.kubernetes.io/part-of: kube-state-metrics
+      app.kubernetes.io/version: 2.17.0
+      helm.sh/chart: kube-state-metrics-6.3.0
+      release: my-prometheus
+    name: my-prometheus-kube-state-metrics
+    namespace: default
+    resourceVersion: "4185429"
+    uid: acf8738d-3e05-4669-8e32-ce3d6bbf506b
+  spec:
+    clusterIP: 10.43.184.109
+    clusterIPs:
+    - 10.43.184.109
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: http
+    selector:
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/name: kube-state-metrics
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: my-prometheus
+      meta.helm.sh/release-namespace: default
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2025-09-11T04:03:24Z"
+    labels:
+      app.kubernetes.io/component: metrics
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: prometheus-node-exporter
+      app.kubernetes.io/part-of: prometheus-node-exporter
+      app.kubernetes.io/version: 1.9.1
+      helm.sh/chart: prometheus-node-exporter-4.47.3
+      jobLabel: node-exporter
+      release: my-prometheus
+    name: my-prometheus-prometheus-node-exporter
+    namespace: default
+    resourceVersion: "4185410"
+    uid: 7d237ef5-a3ad-466b-ac04-2064300092a6
+  spec:
+    clusterIP: 10.43.48.27
+    clusterIPs:
+    - 10.43.48.27
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http-metrics
+      port: 9100
+      protocol: TCP
+      targetPort: 9100
+    selector:
+      app.kubernetes.io/instance: my-prometheus
+      app.kubernetes.io/name: prometheus-node-exporter
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"nginx-proxy","namespace":"default"},"spec":{"ports":[{"nodePort":30090,"port":80,"targetPort":80}],"selector":{"app":"nginx-proxy"},"type":"NodePort"}}
+    creationTimestamp: "2025-08-04T06:52:57Z"
+    name: nginx-proxy
+    namespace: default
+    resourceVersion: "1486964"
+    uid: 99a2c14b-1bf0-4fa0-8e3e-696fe219d927
+  spec:
+    clusterIP: 10.43.74.123
+    clusterIPs:
+    - 10.43.74.123
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - nodePort: 30090
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: nginx-proxy
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2025-09-11T04:03:27Z"
+    labels:
+      managed-by: prometheus-operator
+      operated-prometheus: "true"
+    name: prometheus-operated
+    namespace: default
+    ownerReferences:
+    - apiVersion: monitoring.coreos.com/v1
+      kind: Prometheus
+      name: my-prometheus-kube-prometh-prometheus
+      uid: 9ea0fac5-d591-4ed1-9c02-81a89b791f38
+    resourceVersion: "4185682"
+    uid: 7465af6d-1db1-465f-8865-72a2979324ad
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http-web
+      port: 9090
+      protocol: TCP
+      targetPort: http-web
+    selector:
+      app.kubernetes.io/name: prometheus
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"react-front"},"name":"react-front","namespace":"default"},"spec":{"ports":[{"name":"http","port":80,"protocol":"TCP","targetPort":80}],"selector":{"app":"react-front"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-08-05T04:10:52Z"
+    labels:
+      app: react-front
+    name: react-front
+    namespace: default
+    resourceVersion: "5864691"
+    uid: 82de2f03-bb90-4898-9156-83dbcd478ef2
+  spec:
+    clusterIP: 10.43.224.52
+    clusterIPs:
+    - 10.43.224.52
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: react-front
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"spring-backend"},"name":"spring-backend","namespace":"default"},"spec":{"ports":[{"name":"http","nodePort":30082,"port":8080,"protocol":"TCP","targetPort":8080}],"selector":{"app":"spring-backend"},"type":"NodePort"}}
+    creationTimestamp: "2025-07-10T05:56:19Z"
+    labels:
+      app: spring-backend
+    name: spring-backend
+    namespace: default
+    resourceVersion: "5867013"
+    uid: 59dfb128-0fe1-4f72-804a-6486bce08eee
+  spec:
+    clusterIP: 10.43.10.186
+    clusterIPs:
+    - 10.43.10.186
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 30082
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: spring-backend
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: traefik.io/v1alpha1
+  kind: IngressRoute
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"traefik.io/v1alpha1","kind":"IngressRoute","metadata":{"annotations":{},"name":"explorer-ingressroute","namespace":"default"},"spec":{"entryPoints":["websecure"],"routes":[{"kind":"Rule","match":"Host(`explorer.jw-capstone.store`) \u0026\u0026 PathPrefix(`/explorer`)","middlewares":[{"name":"secure-headers","namespace":"default"}],"priority":40,"services":[{"name":"blockchain-node","port":9100}]},{"kind":"Rule","match":"Host(`explorer.jw-capstone.store`) \u0026\u0026 PathPrefix(`/`)","middlewares":[{"name":"secure-headers","namespace":"default"}],"priority":1,"services":[{"name":"flutter-service","port":80}]}],"tls":{"secretName":"voting-origin-tls"}}}
+    creationTimestamp: "2025-09-25T07:11:11Z"
+    generation: 3
+    name: explorer-ingressroute
+    namespace: default
+    resourceVersion: "5393747"
+    uid: 23d513a2-12e5-4770-addc-89fa8a277367
+  spec:
+    entryPoints:
+    - websecure
+    routes:
+    - kind: Rule
+      match: Host(`explorer.jw-capstone.store`) && PathPrefix(`/explorer`)
+      middlewares:
+      - name: secure-headers
+        namespace: default
+      priority: 40
+      services:
+      - name: blockchain-node
+        port: 9100
+    - kind: Rule
+      match: Host(`explorer.jw-capstone.store`) && PathPrefix(`/`)
+      middlewares:
+      - name: secure-headers
+        namespace: default
+      priority: 1
+      services:
+      - name: flutter-service
+        port: 80
+    tls:
+      secretName: voting-origin-tls
+- apiVersion: traefik.io/v1alpha1
+  kind: IngressRoute
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"traefik.io/v1alpha1","kind":"IngressRoute","metadata":{"annotations":{},"name":"voting-ingressroute","namespace":"default"},"spec":{"entryPoints":["websecure"],"routes":[{"kind":"Rule","match":"Host(`voting.jw-capstone.store`) \u0026\u0026 PathPrefix(`/explorer`)","middlewares":[{"name":"forward-https-headers","namespace":"default"},{"name":"secure-headers","namespace":"default"},{"name":"rate-limit","namespace":"default"}],"priority":30,"services":[{"name":"blockchain-node","port":9100}]},{"kind":"Rule","match":"Host(`voting.jw-capstone.store`) \u0026\u0026 PathPrefix(`/api`)","middlewares":[{"name":"secure-headers","namespace":"default"},{"name":"rate-limit","namespace":"default"}],"priority":20,"services":[{"name":"spring-backend","port":8080}]},{"kind":"Rule","match":"Host(`voting.jw-capstone.store`) \u0026\u0026 PathPrefix(`/`)","middlewares":[{"name":"secure-headers","namespace":"default"},{"name":"rate-limit","namespace":"default"}],"priority":1,"services":[{"name":"react-front","port":80}]},{"kind":"Rule","match":"Host(`grafana.jw-capstone.store`)","priority":10,"services":[{"name":"my-prometheus-grafana","port":80}]}],"tls":{"secretName":"voting-origin-tls"}}}
+    creationTimestamp: "2025-09-18T13:48:46Z"
+    generation: 18
+    name: voting-ingressroute
+    namespace: default
+    resourceVersion: "5384658"
+    uid: 338eb2d6-c4cc-40d7-b52f-d25292f48264
+  spec:
+    entryPoints:
+    - websecure
+    routes:
+    - kind: Rule
+      match: Host(`voting.jw-capstone.store`) && PathPrefix(`/explorer`)
+      middlewares:
+      - name: forward-https-headers
+        namespace: default
+      - name: secure-headers
+        namespace: default
+      - name: rate-limit
+        namespace: default
+      priority: 30
+      services:
+      - name: blockchain-node
+        port: 9100
+    - kind: Rule
+      match: Host(`voting.jw-capstone.store`) && PathPrefix(`/api`)
+      middlewares:
+      - name: secure-headers
+        namespace: default
+      - name: rate-limit
+        namespace: default
+      priority: 20
+      services:
+      - name: spring-backend
+        port: 8080
+    - kind: Rule
+      match: Host(`voting.jw-capstone.store`) && PathPrefix(`/`)
+      middlewares:
+      - name: secure-headers
+        namespace: default
+      - name: rate-limit
+        namespace: default
+      priority: 1
+      services:
+      - name: react-front
+        port: 80
+    - kind: Rule
+      match: Host(`grafana.jw-capstone.store`)
+      priority: 10
+      services:
+      - name: my-prometheus-grafana
+        port: 80
+    tls:
+      secretName: voting-origin-tls
+kind: List
+metadata:
+  resourceVersion: ""

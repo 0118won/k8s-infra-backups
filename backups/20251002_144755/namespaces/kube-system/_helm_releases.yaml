@@ -1,0 +1,21 @@
+- app_version: 2.16.0
+  chart: kube-state-metrics-6.1.0
+  name: my-kube-state-metrics
+  namespace: kube-system
+  revision: "1"
+  status: deployed
+  updated: 2025-07-12 05:02:13.680543307 +0000 UTC
+- app_version: v3.5.2
+  chart: traefik-37.1.1
+  name: traefik
+  namespace: kube-system
+  revision: "4"
+  status: deployed
+  updated: 2025-09-18 14:33:12.679289845 +0000 UTC
+- app_version: v3.3.2
+  chart: traefik-crd-34.2.1+up34.2.0
+  name: traefik-crd
+  namespace: kube-system
+  revision: "1"
+  status: deployed
+  updated: 2025-06-28 15:29:24.118792215 +0000 UTC
