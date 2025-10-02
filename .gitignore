@@ -8,3 +8,4 @@
 *.crt
 *.key
 *.pem
+!backups/*.tar.gz
